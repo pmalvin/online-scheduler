@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/pure/pure.css">
+        <link rel="stylesheet" href="~/lib/pure/grids-responsive.css">
+        <link rel="stylesheet" href="~/css/general.css">
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/lib/pure/pure-min.css">
+        <link rel="stylesheet" href="~/lib/pure/grids-responsive-min.css">
+        <link rel="stylesheet" href="~/css/general.css">
+    </environment>
+</head>
+<body>
+    @*这里开始布局*@
+    <header class="header">
+        <h1 class="brand-title">在线日程管理</h1>
+        <ul class="account-link">
+            <span id="log-in"><a href="#" class="header-btn">登录</a></span>
+            <span id="register"><a href="#" class="header-btn">注册</a></span>
+        </span>
+    </header>
+    <div class="pure-g">
+    <nav class="sidebar pure-u-1-6">
+        <div class="pure-menu">
+            <ul class="pure-menu-list nav-menu-list">
+                <li class="pure-menu-item"><a href="#" class="pure-menu-link">ABC</a></li>
+                <li class="pure-menu-item"><a href="#" class="pure-menu-link">ABC</a></li>
+                <li class="pure-menu-item"><a href="#" class="pure-menu-link">ABC</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="content pure-u-5-6">
+
+    </div>
+    </div><!-- end of pure-g -->
+    @RenderBody()
+    @*至此结束布局*@
+    <environment include="Development">
+        <script src="~lib/vue/vue.js"></script>
+        <script src="~/js/general.js"></script>
+    </environment>
+    <environment include="Development">
+        <script src="~lib/vue/vue.min.js"></script>
+        <script src="~/js/general.js"></script>
+    </environment>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

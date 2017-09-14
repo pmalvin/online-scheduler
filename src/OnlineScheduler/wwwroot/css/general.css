@@ -1,0 +1,66 @@
+/*这是该项目的默认css文件*/
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+a {
+    color:#3b8bba;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+body {
+    background-color: #fff;
+}
+header {
+    background-color: #333;
+    border-bottom: 2px solid #3b8bba;
+}
+
+.header h1 {
+    padding-left:3em;
+    color:#fff;
+    letter-spacing: 0.2em;
+    font-weight: 100;
+    font-size:1.5em;
+    display: inline-block;
+}
+
+.brand-title {
+    text-align: left;
+    padding: 0 0;
+}
+
+.account-link {
+    float:right;
+    color:#fff;
+    font-size: 120%;
+    font-weight: 100;
+}
+.account-link #register {
+    padding-left:0.5em;
+    padding-right: 1em;
+}
+.account-link #log-in {
+    padding-right:0.5em;
+}
+a.header-btn {
+    color: #eee;
+}
+a.header-btn:hover {
+    text-decoration: none;
+    color: #999;
+}
+
+/*Sidebar*/
+.sidebar {
+    background-color: #191818;
+    position: fixed;
+    height: 100%;
+}
+.sidebar {
+    color: #999;
+}
