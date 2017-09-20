@@ -105,6 +105,7 @@ a.header-btn:focus {
 }
 .welcome-btn-group {
     margin-top: 4em;
+    text-align: center;
 }
 .welcome-btn {
     width: 8em;
@@ -114,4 +115,15 @@ a.header-btn:focus {
     margin-left: .5em;
     margin-right: .5em;
     background-color: #fff;
+    vertical-align: middle;
+}
+
+.welcome-btn:focus,
+.welcome-btn:hover {
+    border-color: #0078e7;
+    background: #fff;
+}
+.welcome-btn:active {
+    background-image: none;
+    border:inherit;
 }
