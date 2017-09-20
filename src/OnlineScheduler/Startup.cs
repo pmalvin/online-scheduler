@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using OnlineScheduler.Models;
 
 namespace OnlineScheduler
 {
@@ -22,6 +24,8 @@ namespace OnlineScheduler
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            string connStr = Configuration.GetConnectionString("SchedulerDatabase");
+            services.AddDbContext<SchedulerContext>(options => options.UseNpgsql(connStr));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
