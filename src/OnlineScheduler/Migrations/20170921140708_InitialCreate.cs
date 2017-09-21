@@ -29,8 +29,10 @@ namespace OnlineScheduler.Migrations
                 {
                     PlanId = table.Column<int>(type: "int4", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    AutoFinish = table.Column<bool>(type: "bool", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: true),
                     DueTime = table.Column<DateTimeOffset>(type: "timestamptz", nullable: false),
+                    IsFinished = table.Column<bool>(type: "bool", nullable: false),
                     PlanName = table.Column<string>(type: "text", nullable: true),
                     StartTime = table.Column<DateTimeOffset>(type: "timestamptz", nullable: false),
                     UserEmail = table.Column<string>(type: "text", nullable: true)

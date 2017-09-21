@@ -75,23 +75,22 @@ a.header-btn:focus {
     font-weight: lighter;
     letter-spacing: 0.2em;
 }
-#side-menu a:hover,
-#side-menu a:focus {
+#side-menu .pure-menu-link:hover,
+#side-menu .pure-menu-link:focus {
     text-decoration: none;
-}
-#side-menu .pure-menu-selected {
-    background-color: #0078e7;
 }
 #side-menu .pure-menu-selected a {
     color: #fff;
+    background-color: #0078e7;
 }
-#side-menu .pure-menu-selected > .pure-menu-link:hover,
-#side-menu .pure-menu-selected > .pure-menu-link:focus {
-    background-color:transparent;
-}
-#side-menu .pure-menu-separator {
-    background-color: #333;
+#side-menu .pure-menu-separator{
     margin-top: .15em;
+    background-color: #999;
+}
+#side-menu .pure-menu-separator .pure-menu-link,
+#side-menu .pure-menu-separator .pure-menu-link:hover,
+#side-menu .pure-menu-separator .pure-menu-link:focus {
+    background-color: transparent;
 }
 
 /*Welcome page*/
@@ -126,4 +125,16 @@ a.header-btn:focus {
 .welcome-btn:active {
     background-image: none;
     border:inherit;
+}
+
+/*Register Page*/
+#register-form fieldset{
+    margin-left: 2em;
+}
+.register-legend h1 {
+    font-weight: 300;
+    margin-left: 1em;
+}
+#register-form input {
+    min-width: 30em;
 }

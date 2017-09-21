@@ -25,9 +25,13 @@ namespace OnlineScheduler.Migrations
                     b.Property<int>("PlanId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("AutoFinish");
+
                     b.Property<string>("Description");
 
                     b.Property<DateTimeOffset>("DueTime");
+
+                    b.Property<bool>("IsFinished");
 
                     b.Property<string>("PlanName");
 

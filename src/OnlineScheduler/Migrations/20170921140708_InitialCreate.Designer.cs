@@ -11,7 +11,7 @@ using System;
 namespace OnlineScheduler.Migrations
 {
     [DbContext(typeof(SchedulerContext))]
-    [Migration("20170920143224_InitialCreate")]
+    [Migration("20170921140708_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,9 +26,13 @@ namespace OnlineScheduler.Migrations
                     b.Property<int>("PlanId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("AutoFinish");
+
                     b.Property<string>("Description");
 
                     b.Property<DateTimeOffset>("DueTime");
+
+                    b.Property<bool>("IsFinished");
 
                     b.Property<string>("PlanName");
 

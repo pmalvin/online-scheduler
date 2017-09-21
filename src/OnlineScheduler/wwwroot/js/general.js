@@ -10,7 +10,7 @@ var sideBarVm = new Vue({
         selectedItem: function () {
             return this.page;
         }
-    }
+    },
 });
 
 var headerVm = new Vue({

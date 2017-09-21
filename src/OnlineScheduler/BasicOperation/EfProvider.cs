@@ -8,7 +8,7 @@ namespace OnlineScheduler.BasicOperation
 {
     public class EfProvider : IProvider
     {
-        public void CreatePlan(User owner, string name, DateTimeOffset start, DateTimeOffset due, string description = "")
+        public void CreatePlan(User owner, string name, DateTimeOffset start, DateTimeOffset due, bool autoFinish, string description = "")
         {
             using (var context = new SchedulerContext())
             {
@@ -18,8 +18,14 @@ namespace OnlineScheduler.BasicOperation
                     StartTime = start,
                     DueTime = due,
                     PlanName = name,
-                    Description = description
+                    Description = description,
+                    AutoFinish = autoFinish
                 };
+                newPlan.IsFinished = false;
+                if (autoFinish && DateTimeOffset.Compare(DateTimeOffset.UtcNow, due) >= 0)
+                {
+                    newPlan.IsFinished = true;
+                }
                 context.Plans.Add(newPlan);
                 context.SaveChanges();
             }
@@ -29,7 +35,7 @@ namespace OnlineScheduler.BasicOperation
         {
             using (var context = new SchedulerContext())
             {
-                Plan toDel = context.Plans.Single(plan => plan.PlanId == planId);
+                Plan toDel = context.Plans.SingleOrDefault(plan => plan.PlanId == planId);
                 context.Plans.Remove(toDel);
                 context.SaveChanges();
             }
@@ -39,7 +45,7 @@ namespace OnlineScheduler.BasicOperation
         {
             using (var context = new SchedulerContext())
             {
-                return context.Plans.Single(plan => plan.PlanId == planId);
+                return context.Plans.SingleOrDefault(plan => plan.PlanId == planId);
             }
         }
 
@@ -63,7 +69,27 @@ namespace OnlineScheduler.BasicOperation
         {
             using (var context = new SchedulerContext())
             {
-                return context.Users.Single(user => user.EmailAddress.Equals(email));
+                return context.Users.SingleOrDefault(user => user.EmailAddress.Equals(email));
+            }
+        }
+
+        public void MarkAsFinished(int planId)
+        {
+            using (var context = new SchedulerContext())
+            {
+                var target = context.Plans.SingleOrDefault(plan => plan.PlanId == planId);
+                target.IsFinished = true;
+                context.SaveChanges();
+            }
+        }
+
+        public void MarkAsUnFinished(int planId)
+        {
+            using (var context = new SchedulerContext())
+            {
+                var target = context.Plans.SingleOrDefault(plan => plan.PlanId == planId);
+                target.IsFinished = false;
+                context.SaveChanges();
             }
         }
 
@@ -90,7 +116,7 @@ namespace OnlineScheduler.BasicOperation
         {
             using (var context = new SchedulerContext())
             {
-                Plan planInDb = context.Plans.Single(plan => plan.PlanId == planId);
+                Plan planInDb = context.Plans.SingleOrDefault(plan => plan.PlanId == planId);
                 if (planInDb == null)
                 {
                     throw new PlanNotExistException();

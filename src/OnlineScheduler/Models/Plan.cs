@@ -15,5 +15,7 @@ namespace OnlineScheduler.Models
         public DateTimeOffset DueTime { get; set; }
         public string PlanName { get; set; }
         public string Description { get; set; }
+        public bool AutoFinish { get; set; }
+        public bool IsFinished { get; set; }
     }
 }
