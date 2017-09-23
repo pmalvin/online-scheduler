@@ -1,0 +1,12 @@
+﻿@page
+@model RegisterResultModel
+@{
+    ViewData["Title"] = "注册 - 在线日程管理";
+    ViewData["CurrentPage"] = "register";
+}
+<h1>@ViewData["Message"]</h1>
+@section TemporaryMenu {
+    <li class="pure-menu-item pure-menu-separator pure-menu-selected">
+        <a href="/Account/Register" class="pure-menu-link">注册账号</a>
+    </li>
+}

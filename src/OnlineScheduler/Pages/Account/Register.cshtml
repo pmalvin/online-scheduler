@@ -1,0 +1,31 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "注册";
+    ViewData["CurrentPage"] = "register";
+}
+<form class="pure-form pure-form-stacked" id="register-form" method="post">
+    <div class="register-legend">
+        <h1>注册新账号</h1>
+        <hr>
+    </div>
+    <fieldset>
+        <label for="email">电子邮件地址</label>
+        <input asp-for="NewUser.EmailAddress" type="email" id="email" v-model="email" required>
+        <label for="username">用户名（不超过30字符）</label>
+        <input asp-for="NewUser.Username" type="text" id="username" maxlength="30" v-model="username" required>
+        <label for="password">密码（10-30字符）</label>
+        <input asp-for="NewUser.Password" type="password" id="password" minlength="10" maxlength="30"  v-model="password" required>
+        <label for="confirm-pwd">再次输入密码</label>
+        <input type="password" id="confirm-pwd" minlength="10" maxlength="30" v-model="comfirmPwd" required>
+        <button type="submit" class="pure-button pure-button-primary submit-button">注册</button>
+    </fieldset>
+</form>
+@section TemporaryMenu {
+    <li class="pure-menu-item pure-menu-separator pure-menu-selected">
+        <a href="/Account/Register" class="pure-menu-link">注册账号</a>
+    </li>
+}
+@section Scripts {
+    <script src="~/js/register.js"></script>
+}

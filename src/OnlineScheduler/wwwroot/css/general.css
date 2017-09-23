@@ -114,27 +114,34 @@ a.header-btn:focus {
     margin-left: .5em;
     margin-right: .5em;
     background-color: #fff;
-    vertical-align: middle;
+    line-height: 7em;
 }
-
 .welcome-btn:focus,
 .welcome-btn:hover {
     border-color: #0078e7;
     background: #fff;
+    text-decoration: none;
 }
 .welcome-btn:active {
     background-image: none;
     border:inherit;
 }
 
-/*Register Page*/
-#register-form fieldset{
+/*Register and Login Page*/
+#register-form fieldset,
+#login-form fieldset{
     margin-left: 2em;
 }
-.register-legend h1 {
+.register-legend h1,
+.login-legend h1 {
     font-weight: 300;
     margin-left: 1em;
 }
-#register-form input {
+#register-form input,
+#login-form input {
     min-width: 30em;
+}
+#register-form .submit-button,
+#login-form .submit-button {
+    margin-top:1em;
 }

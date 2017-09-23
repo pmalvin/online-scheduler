@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using OnlineScheduler.Models;
-namespace OnlineScheduler.BasicOperation
+namespace OnlineScheduler.Repository
 {
     public interface IProvider
     {
         void RegisterUser(string username, string password, string email);
+        User LoginUser(string email, string password);
         User GetUser(string email);
         void CreatePlan(User owner, string name, DateTimeOffset start, DateTimeOffset due, bool autoFinish, string description = "");
         void DeletePlan(int planId);

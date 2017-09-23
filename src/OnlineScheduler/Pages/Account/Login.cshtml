@@ -1,0 +1,24 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "登录";
+    ViewData["CurrentPage"] = "login";
+}
+<form class="pure-form pure-form-stacked" id="login-form" method="post">
+    <div class="login-legend">
+        <h1>登录</h1>
+        <hr>
+    </div>
+    <fieldset>
+        <label for="email">电子邮件地址</label>
+        <input asp-for="Email" type="email" id="email" v-model="email" required>
+        <label for="password">密码</label>
+        <input asp-for="Password" type="password" id="password" minlength="10" maxlength="30"  v-model="password" required>
+        <button type="submit" class="pure-button pure-button-primary submit-button">登录</button>
+    </fieldset>
+</form>
+@section TemporaryMenu {
+    <li class="pure-menu-item pure-menu-separator pure-menu-selected">
+        <a href="/Account/Login" class="pure-menu-link">登录</a>
+    </li>
+}

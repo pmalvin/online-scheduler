@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using OnlineScheduler.Models;
+using OnlineScheduler.Repository;
 
 namespace OnlineScheduler
 {
@@ -26,6 +27,13 @@ namespace OnlineScheduler
             services.AddMvc();
             string connStr = Configuration.GetConnectionString("SchedulerDatabase");
             services.AddDbContext<SchedulerContext>(options => options.UseNpgsql(connStr));
+            services.AddScoped<IProvider, EfProvider>();
+            services.AddAuthentication("UserCookieAuthentication")
+                .AddCookie("UserCookieAuthentication", options =>
+                {
+                    options.LoginPath = "/Account/Login";
+                    options.AccessDeniedPath = "/Account/Login";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +49,8 @@ namespace OnlineScheduler
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
+    <title>@ViewData["Title"] - 在线日程管理</title>
     <script>
         var currentPage = "@ViewData["CurrentPage"]";
     </script>
@@ -23,8 +23,8 @@
     <header class="header" id="header">@*怎样让header能够固定在页面顶部？*@
         <a href="/"><h1 class="brand-title">在线日程管理</h1></a>
         <ul class="account-link">
-            <span id="log-in"><a href="#" class="header-btn">登录</a></span>
-            <span id="register"><a href="register" class="header-btn">注册</a></span>
+            <span id="log-in"><a href="Account/Login" class="header-btn">登录</a></span>
+            <span id="register"><a href="Account/Register" class="header-btn">注册</a></span>
         </span>
     </header>
 
