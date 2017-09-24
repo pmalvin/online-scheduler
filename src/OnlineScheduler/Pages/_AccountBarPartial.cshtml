@@ -1,0 +1,9 @@
+@if(!User.Identity.IsAuthenticated) {
+    <span id="log-in"><a href="Account/Login" class="header-btn">登录</a></span>
+    <span id="register"><a href="Account/Register" class="header-btn">注册</a></span>
+} 
+else
+{
+    <span id="userName">您好，<a href="#">@User.Identity.Name</a></span>
+    <span id="register"><a href="Account/Logout" class="header-btn">注销</a></span>
+}

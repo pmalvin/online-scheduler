@@ -46,13 +46,10 @@ header {
     color:#fff;
     font-size: 120%;
     font-weight: 100;
+    margin-right: 1em;
 }
-.account-link #register {
-    padding-left:0.5em;
-    padding-right: 1em;
-}
-.account-link #log-in {
-    padding-right:0.5em;
+.account-link span + span {
+    margin-left:0.5em;
 }
 a.header-btn {
     color: #eee;
@@ -124,7 +121,6 @@ a.header-btn:focus {
 }
 .welcome-btn:active {
     background-image: none;
-    border:inherit;
 }
 
 /*Register and Login Page*/

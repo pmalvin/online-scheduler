@@ -24,16 +24,16 @@ namespace OnlineScheduler
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-            string connStr = Configuration.GetConnectionString("SchedulerDatabase");
-            services.AddDbContext<SchedulerContext>(options => options.UseNpgsql(connStr));
-            services.AddScoped<IProvider, EfProvider>();
             services.AddAuthentication("UserCookieAuthentication")
                 .AddCookie("UserCookieAuthentication", options =>
                 {
                     options.LoginPath = "/Account/Login";
                     options.AccessDeniedPath = "/Account/Login";
                 });
+            services.AddMvc();
+            string connStr = Configuration.GetConnectionString("SchedulerDatabase");
+            services.AddDbContext<SchedulerContext>(options => options.UseNpgsql(connStr));
+            services.AddScoped<IProvider, EfProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
