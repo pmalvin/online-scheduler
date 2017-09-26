@@ -13,22 +13,9 @@ namespace OnlineScheduler.Repository
         {
             this.context = context;
         }
-        public void CreatePlan(User owner, string name, DateTimeOffset start, DateTimeOffset due, bool autoFinish, string description = "")
+
+        public void CreatePlan(Plan newPlan)
         {
-            Plan newPlan = new Plan
-            {
-                UserEmail = owner.EmailAddress,
-                StartTime = start,
-                DueTime = due,
-                PlanName = name,
-                Description = description,
-                AutoFinish = autoFinish
-            };
-            newPlan.IsFinished = false;
-            if (autoFinish && DateTimeOffset.Compare(DateTimeOffset.UtcNow, due) >= 0)
-            {
-                newPlan.IsFinished = true;
-            }
             context.Plans.Add(newPlan);
             context.SaveChanges();
         }
@@ -60,6 +47,22 @@ namespace OnlineScheduler.Repository
             return context.Users.SingleOrDefault(user => user.EmailAddress.ToLower().Equals(email.ToLower()));
         }
 
+        public bool HasFullAccess(string userEmail, int planId)
+        {
+            var planInDb = context.Plans.SingleOrDefault(plan => plan.PlanId == planId);
+            if (planInDb == null)
+            {
+                throw new PlanNotExistException();
+            }
+            return planInDb.Owner.EmailAddress.Equals(userEmail, StringComparison.OrdinalIgnoreCase);
+        }
+        public bool HasFullAccess(User user, Plan plan)
+        {
+            var userEmail = user.EmailAddress;
+            var planId = plan.PlanId;
+            return HasFullAccess(userEmail, planId);
+        }
+
         /// <summary>
         /// Used when logging in
         /// </summary>
@@ -72,17 +75,10 @@ namespace OnlineScheduler.Repository
                 && user.Password == password);
         }
 
-        public void MarkAsFinished(int planId)
+        public void MarkFinished(int planId, bool isFinished)
         {
-            var target = context.Plans.SingleOrDefault(plan => plan.PlanId == planId);
-            target.IsFinished = true;
-            context.SaveChanges();
-        }
-
-        public void MarkAsUnFinished(int planId)
-        {
-            var target = context.Plans.SingleOrDefault(plan => plan.PlanId == planId);
-            target.IsFinished = false;
+            var planInDb = context.Plans.SingleOrDefault(plan => plan.PlanId == planId);
+            planInDb.IsFinished = isFinished;
             context.SaveChanges();
         }
 
@@ -119,5 +115,7 @@ namespace OnlineScheduler.Repository
             }
             context.SaveChanges();
         }
+
+
     }
 }
