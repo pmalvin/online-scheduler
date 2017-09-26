@@ -39,6 +39,10 @@ namespace OnlineScheduler.Controllers
         [HttpGet("{id}", Name = "GetPlan")]
         public IActionResult GetPlan(int id)
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
             if (!provider.HasFullAccess(CurrentUserEmail, id))
             {
                 return Unauthorized();
@@ -53,6 +57,10 @@ namespace OnlineScheduler.Controllers
             {
                 return BadRequest();
             }
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Unauthorized();
+            }
             plan.UserEmail = CurrentUserEmail;
             provider.CreatePlan(plan);
             return CreatedAtRoute("GetPlan", plan);
@@ -64,7 +72,7 @@ namespace OnlineScheduler.Controllers
             {
                 return BadRequest();
             }
-            if (!provider.HasFullAccess(CurrentUserEmail, id))
+            if (!User.Identity.IsAuthenticated || !provider.HasFullAccess(CurrentUserEmail, id))
             {
                 return Unauthorized();
             }
@@ -75,7 +83,7 @@ namespace OnlineScheduler.Controllers
         [HttpPatch("{id}")]
         public IActionResult MarkAsFinished(int id, [FromBody] bool isFinished)
         {
-            if (!provider.HasFullAccess(CurrentUserEmail, id))
+            if (!User.Identity.IsAuthenticated || !provider.HasFullAccess(CurrentUserEmail, id))
             {
                 return Unauthorized();
             }
@@ -86,12 +94,17 @@ namespace OnlineScheduler.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeletePlan(int id)
         {
-            if (!provider.HasFullAccess(CurrentUserEmail, id))
+            if (NewMethod(id))
             {
                 return Unauthorized();
             }
             provider.DeletePlan(id);
             return new NoContentResult();
+        }
+
+        private bool NewMethod(int id)
+        {
+            return !User.Identity.IsAuthenticated || !provider.HasFullAccess(CurrentUserEmail, id);
         }
     }
 }
