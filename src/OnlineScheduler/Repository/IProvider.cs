@@ -13,6 +13,7 @@ namespace OnlineScheduler.Repository
         void DeletePlan(int planId);
         void UpdatePlan(int planId, Plan newPlan);
         IEnumerable<Plan> GetPlansByUser(User owner);
+        IEnumerable<Plan> GetPlansForDate(string userEmail, DateTimeOffset date);
         IEnumerable<Plan> GetPlansByUser(string userEmail);
         Plan GetPlan(int planId);
         void MarkFinished(int planId, bool isFinished);

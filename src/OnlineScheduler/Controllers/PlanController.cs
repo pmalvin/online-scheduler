@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace OnlineScheduler.Controllers
 {
+    /// <summary>
+    /// Route: api/plan
+    /// </summary>
     [Route("api/[controller]")]
     public class PlanController : Controller
     {
@@ -25,6 +28,12 @@ namespace OnlineScheduler.Controllers
             }
         }
 
+        private bool IsUserInvalid(int planId)
+        {
+            return !User.Identity.IsAuthenticated || !provider.HasFullAccess(CurrentUserEmail, planId);
+        }
+
+        /*
         [HttpGet]
         public IActionResult GetPlans()
         {
@@ -35,15 +44,22 @@ namespace OnlineScheduler.Controllers
             var plans = provider.GetPlansByUser(CurrentUserEmail);
             return new ObjectResult(plans);
         }
-
-        [HttpGet("{id}", Name = "GetPlan")]
-        public IActionResult GetPlan(int id)
+        */
+        [HttpGet]
+        public IActionResult GetPlanForDate([FromQuery] DateTimeOffset date)
         {
             if (!User.Identity.IsAuthenticated)
             {
                 return Unauthorized();
             }
-            if (!provider.HasFullAccess(CurrentUserEmail, id))
+            var plans = provider.GetPlansForDate(CurrentUserEmail, date);
+            return new ObjectResult(plans.Select(plan => new PlanDTO(plan)));
+        }
+
+        [HttpGet("{id}", Name = "GetPlan")]
+        public IActionResult GetPlan(int id)
+        {
+            if (IsUserInvalid(id))
             {
                 return Unauthorized();
             }
@@ -72,7 +88,7 @@ namespace OnlineScheduler.Controllers
             {
                 return BadRequest();
             }
-            if (!User.Identity.IsAuthenticated || !provider.HasFullAccess(CurrentUserEmail, id))
+            if (IsUserInvalid(id))
             {
                 return Unauthorized();
             }
@@ -83,7 +99,7 @@ namespace OnlineScheduler.Controllers
         [HttpPatch("{id}")]
         public IActionResult MarkAsFinished(int id, [FromBody] bool isFinished)
         {
-            if (!User.Identity.IsAuthenticated || !provider.HasFullAccess(CurrentUserEmail, id))
+            if (IsUserInvalid(id))
             {
                 return Unauthorized();
             }
@@ -94,17 +110,12 @@ namespace OnlineScheduler.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeletePlan(int id)
         {
-            if (NewMethod(id))
+            if (IsUserInvalid(id))
             {
                 return Unauthorized();
             }
             provider.DeletePlan(id);
             return new NoContentResult();
-        }
-
-        private bool NewMethod(int id)
-        {
-            return !User.Identity.IsAuthenticated || !provider.HasFullAccess(CurrentUserEmail, id);
         }
     }
 }

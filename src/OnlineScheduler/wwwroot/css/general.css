@@ -7,6 +7,9 @@
 .hide {
     display: none;
 }
+[v-cloak] {
+    display: none;
+}
 body {
     background-color: #eee;
 }
@@ -140,4 +143,60 @@ a.header-btn:focus {
 #register-form .submit-button,
 #login-form .submit-button {
     margin-top:1em;
+}
+
+
+/*Timetable Page*/
+#timetable-page {
+    max-width: 700px;
+    margin: 3em auto;
+}
+#timetable-page #head-date{
+    text-align: center;
+    border-bottom: 1px solid #999;
+    display: flex;
+}
+#timetable-page #head-date h1 {
+    font-weight: 400;
+    letter-spacing: .1em;
+    flex:1;
+}
+#timetable-page #last-day-btn {
+    left:0px;
+}
+#timetable-page #next-day-btn {
+    right:0px;
+}
+
+#timetable-page #plan-list {
+    margin: 2em auto;
+}
+#plan-list .plan-item + .plan-item{
+    margin-top: 1em;
+}
+#plan-list .plan-item {
+    background-color: lightblue;
+    color:darkblue;
+    height:3.5em;
+    padding-left:1.5em;
+    padding-right:1.5em;
+    display:flex;
+}
+#plan-list .opr-group {
+    right: 1em;
+}
+#plan-list .opr-btn {
+    margin:0;/*To be adjusted*/
+}
+#plan-list .plan-info {
+    line-height: 3.5em;
+    flex:1;
+}
+#plan-list .no-plan {
+    text-align: center;
+    color:#666;
+    font-size: 120%;
+}
+#plan-list .time-period {
+    font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
 }

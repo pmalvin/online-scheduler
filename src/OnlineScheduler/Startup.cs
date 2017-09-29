@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using OnlineScheduler.Models;
 using OnlineScheduler.Repository;
+using Newtonsoft.Json;
 
 namespace OnlineScheduler
 {
@@ -30,7 +31,10 @@ namespace OnlineScheduler
                     options.LoginPath = "/Account/Login";
                     options.AccessDeniedPath = "/Account/Login";
                 });
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                });
             string connStr = Configuration.GetConnectionString("SchedulerDatabase");
             services.AddDbContext<SchedulerContext>(options => options.UseNpgsql(connStr));
             services.AddScoped<IProvider, EfProvider>();

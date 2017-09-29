@@ -4,3 +4,48 @@
     ViewData["Title"] = "今日时间表";
     ViewData["CurrentPage"] = "timetable";
 }
+
+<div id="timetable-page">
+    <div id="head-date">
+        <button v-cloak class="pure-button pure-button-primary toggle-day-btn" id="last-day-btn" v-on:click="toLastDay">前一天</button>
+        <h1 class="date" v-cloak>
+            {{dateTitle}}
+        </h1>
+        <button v-cloak class="pure-button pure-button-primary toggle-day-btn" id="next-day-btn" v-on:click="toNextDay">后一天</button>
+    </div>
+
+    <div id="timeline">
+
+    </div>
+
+    <div id="plan-bar">
+        
+    </div>
+
+    <div id="plan-list">
+        <div class="no-plan" v-show="plans.length == 0" >本日没有计划！</div>
+        <div class="plan-item" v-for="plan in plans">
+            <div class="plan-info" v-cloak>
+            <span class="time-period">{{smartFormatDate(plan.startTime)}} - {{smartFormatDate(plan.dueTime)}}</span>
+            <span class="plan-name-desc">{{plan.planName}}: {{plan.description}}</span>
+            </div>
+            <div class="opr-group">
+                <button class="opr-btn" v-on:click="edit(plan)">Edit</button>
+                <button class="opr-btn" v-on:click="toggleFinish(plan)" v-show="!plan.isFinished">Finish</button>
+                <button class="opr-btn" v-on:click="toggleFinish(plan)" v-show="plan.isFinished">Reopen</button>
+                <button class="opr-btn" v-on:click="deletePlan(plan)">X</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="hide">
+    <a class="pure-button" href="/schedule/tempcreate">添加</a>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/timetable.js"></script>
+}

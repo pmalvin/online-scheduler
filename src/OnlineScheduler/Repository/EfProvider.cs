@@ -42,6 +42,22 @@ namespace OnlineScheduler.Repository
             return context.Plans.Where(plan => plan.UserEmail.Equals(userEmail));
         }
 
+        /// <summary>
+        /// 对于某一天取出相关的plan
+        /// 需要注意的是::操作符是PostgreSQL的特有类型转换操作符，如果迁移到MySQL需要重新写
+        /// </summary>
+        /// <param name="userEmail"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public IEnumerable<Plan> GetPlansForDate(string userEmail, DateTimeOffset date)
+        {
+            var sqlStr = "SELECT * FROM \"Plans\" "
+            + "WHERE lower(\"UserEmail\") = {0} AND "
+            + "(\"StartTime\"::date = {1}::date OR \"DueTime\"::date = {1}::date "
+            + "OR (\"StartTime\"::date < {1}::date AND \"DueTime\"::date > {1}::date));";
+            return context.Plans.FromSql(sqlStr, userEmail.ToLower(), date.Date);
+        }
+
         public User GetUser(string email)
         {
             return context.Users.SingleOrDefault(user => user.EmailAddress.ToLower().Equals(email.ToLower()));
@@ -54,7 +70,7 @@ namespace OnlineScheduler.Repository
             {
                 throw new PlanNotExistException();
             }
-            return planInDb.Owner.EmailAddress.Equals(userEmail, StringComparison.OrdinalIgnoreCase);
+            return planInDb.UserEmail.Equals(userEmail, StringComparison.OrdinalIgnoreCase);
         }
         public bool HasFullAccess(User user, Plan plan)
         {

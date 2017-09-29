@@ -1,0 +1,20 @@
+﻿@page
+@model TempCreateModel
+@{
+    ViewData["Title"] = "Temporary Create Page";
+}
+<form class="pure-form" method="POST">
+    <fieldset>
+        <label for="start-time">开始时间</label>
+        <input type="datetime" asp-for="NewPlan.StartTime">
+        <label for="start-time">结束时间</label>
+        <input type="datetime" asp-for="NewPlan.DueTime">
+        <label for="start-time">名称</label>
+        <input type="text" asp-for="NewPlan.PlanName">
+        <label for="start-time">描述</label>
+        <input type="text" asp-for="NewPlan.Description">
+        <label for="start-time">过期自动完成</label>
+        <input type="checkbox" asp-for="NewPlan.AutoFinish">
+        <button type="submit">OK</button>
+    </fieldset>
+</form>
