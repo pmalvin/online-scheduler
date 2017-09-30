@@ -167,6 +167,17 @@ a.header-btn:focus {
 #timetable-page #next-day-btn {
     right:0px;
 }
+#timetable-page #plan-bar {
+    margin-top: 1.5em;
+}
+#plan-bar .bar-item + .bar-item {
+    margin-top: 4px;
+}
+
+#plan-bar .bar-item {
+    height:4px;
+    background-color: red;/*temporary*/
+}
 
 #timetable-page #plan-list {
     margin: 2em auto;
@@ -175,11 +186,11 @@ a.header-btn:focus {
     margin-top: 1em;
 }
 #plan-list .plan-item {
-    background-color: lightblue;
-    color:darkblue;
+    background-color: #fff;
+    color:#000;
     height:3.5em;
-    padding-left:1.5em;
-    padding-right:1.5em;
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
     display:flex;
 }
 #plan-list .opr-group {
@@ -191,6 +202,11 @@ a.header-btn:focus {
 #plan-list .plan-info {
     line-height: 3.5em;
     flex:1;
+    display: flex;
+}
+.plan-item .plan-finished {
+    text-decoration: line-through;
+    color:#666;
 }
 #plan-list .no-plan {
     text-align: center;
@@ -199,4 +215,26 @@ a.header-btn:focus {
 }
 #plan-list .time-period {
     font-family: Cambria, Cochin, Georgia, Times, Times New Roman, serif;
+    border-right: 1px solid #666;
+    padding-right: .5em;
+    margin-right: .5em;
+}
+.plan-item .item-decoration {
+    width:5px;
+}
+.plan-item .item-decoration-left {
+    margin-right: .5em;
+}
+.plan-item .item-decoration-right {
+    margin-left: .5em;
+}
+#plan-list .plan-add {
+    border: medium dashed #333;
+    display: flex;
+    background-color: transparent;
+}
+.plan-add .add-link {
+    display:block;
+    margin: auto auto;
+    color:#333;
 }

@@ -7,6 +7,9 @@ var timetable = new Vue({
     data: {
         currentDate: undefined,
         plans: [],
+        timelineStyles: {},
+        planColors: {},//in format "plan-id":#...
+        colorList: ['#0078e7', 'black', '#ff8300', 'green', 'purple', 'red', 'gray']
     },
     methods: {
         toNextDay: function () {
@@ -36,7 +39,6 @@ var timetable = new Vue({
 
         },
         toggleFinish: function (plan) {
-            console.log(plan.isFinished + 'to' + !plan.isFinished);
             $.ajax({
                 url: '/api/plan/' + plan.planId,
                 method: 'PATCH',
@@ -73,14 +75,19 @@ var timetable = new Vue({
         },
         daysNear: function () {
             var dict = {};
-            var today = new Date();
-            dict[new Date(Number(today) + 1000 * 3600 * 24).toDateString()] = '明天';
-            dict[new Date(Number(today) + 1000 * 3600 * 48).toDateString()] = '后天';
-            dict[new Date(Number(today) - 1000 * 3600 * 24).toDateString()] = '昨天';
-            dict[new Date(Number(today) - 1000 * 3600 * 48).toDateString()] = '前天';
+            var today = new Date().getTime();
+            dict[new Date(today + 1000 * 3600 * 24).toDateString()] = '明天';
+            dict[new Date(today + 1000 * 3600 * 48).toDateString()] = '后天';
+            dict[new Date(today - 1000 * 3600 * 24).toDateString()] = '昨天';
+            dict[new Date(today - 1000 * 3600 * 48).toDateString()] = '前天';
             return dict;
+        },
+        curDateStartMilis: function () {
+            return new Date(timetable.currentDate.toDateString()).getTime();
+        },
+        curDateEndMilis: function () {
+            return this.curDateStartMilis + 1000 * 3600 * 24;
         }
-
     }
 });
 function formatDate(dateobj) {
@@ -100,9 +107,29 @@ function getPlansForDate(date) {
         method: 'GET',
         success: function (data) {
             timetable.plans = data;
+            timetable.plans.forEach(function (element) {
+                var color = randColor();
+                var planStartMilis = new Date(element.startTime).getTime();
+                var planDueMilis = new Date(element.dueTime).getTime();
+                var startPercentage = planStartMilis <= timetable.curDateStartMilis ?
+                    0 : 100 * (planStartMilis - timetable.curDateStartMilis) / (1000 * 3600 * 24);
+                var endPercentage = planDueMilis >= timetable.curDateEndMilis ?
+                    0 : 100 * (timetable.curDateEndMilis - planDueMilis) / (1000 * 3600 * 24);
+                timetable.planColors[element.planId] = color;
+                timetable.timelineStyles[element.planId] = {
+                    backgroundColor: color,
+                    marginLeft: startPercentage + '%',
+                    marginRight: endPercentage + '%'
+                };
+            });
         },
         error: function (error) {
             console.log(JSON.stringify(error));
         }
     });
+}
+function randColor() {
+    var index = Math.floor(Math.random() * timetable.colorList.length);
+    console.log(timetable.colorList[index]);
+    return timetable.colorList[index];
 }
